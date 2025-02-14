@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>John Collins Art</title>
+    
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <!-- Header -->
+    <header class="bg-dark text-white text-center py-4">
+      <h1 class="fw-bold">John Collins Art</h1>
+    </header>
+
+    <!-- Content Wrapper -->
+    <div id="contentWrapper">
+      <!-- Loader -->
+      <div id="loader" class="loader">
+        <div class="spinner"></div>
+      </div>
+
+      <!-- Gallery Container (initially hidden) -->
+      <main id="galleryContainer" class="container hidden">
+        <div class="gallery d-flex align-items-center justify-content-center">
+          <button id="prevBtn" class="btn btn-outline-light me-3 rounded-circle" aria-label="Previous Image" tabindex="-1">
+            <i class="bi bi-arrow-left-circle fs-3"></i>
+          </button>
+          <div class="image-container shadow-lg">
+            <!-- Transparent placeholder (1x1 PNG) -->
+            <img id="galleryImage" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAE/wH+W4pfSAAAAABJRU5ErkJggg==" class="img-fluid rounded" alt="Gallery Image" />
+          </div>
+          <button id="nextBtn" class="btn btn-outline-light ms-3 rounded-circle" aria-label="Next Image" tabindex="-1">
+            <i class="bi bi-arrow-right-circle fs-3"></i>
+          </button>
+        </div>
+        <div class="image-indicators d-flex mt-3" id="imageIndicators"></div>
+      </main>
+    </div>
+
+    <!-- Bootstrap Modal for Full-Screen Image -->
+    <div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true" data-bs-backdrop="true" role="dialog">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content bg-dark">
+          <div class="modal-body position-relative text-center">
+            <button id="modalPrevBtn" class="modal-nav-btn left" aria-label="Previous Image" tabindex="-1">&lt;</button>
+            <img id="modalImage" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAE/wH+W4pfSAAAAABJRU5ErkJggg==" class="img-fluid rounded" alt="Expanded Image" />
+            <button id="modalNextBtn" class="modal-nav-btn right" aria-label="Next Image" tabindex="-1">&gt;</button>
+            <button type="button" class="close-modal position-absolute top-0 end-0 m-3" data-bs-dismiss="modal" aria-label="Close">&times;</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white text-center py-3">
+      <p>&copy; 2025 Luke Collins – in memory of John Collins. All rights reserved.</p>
+    </footer>
+
+    <!-- Bootstrap JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Custom Script -->
+    <script src="script.js"></script>
+  </body>
+</html>

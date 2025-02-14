@@ -1,0 +1,12 @@
+{
+  "name": "winter-star-ad97",
+  "main": "src/index.js",
+  "compatibility_date": "2024-02-10",
+  "account_id": "f93670f4303def327edbb434c3c6d5a2",
+  "workers_dev": true,
+  "env": {
+    "production": {
+      "routes": ["https://johncollins-art.co.uk/api/images"]
+    }
+  }
+}

@@ -1,0 +1,10 @@
+README.tmp.md
+node_modules/
+worker/node_modules/
+.dev.vars
+.env
+.env.local
+.env.*.local
+*.tmp
+*.log
+.DS_Store
