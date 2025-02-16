@@ -9,7 +9,8 @@ html, body {
 }
 @media (max-width: 768px) {
   html, body {
-    overflow-y: hidden; /* Prevent vertical scroll on mobile */
+    /* No scrolling on mobile */
+    overflow-y: hidden;
   }
 }
 
@@ -30,14 +31,13 @@ header {
   padding: 20px;
   font-size: 1.8rem;
   font-weight: bold;
-  letter-spacing: 1px;
   text-align: center;
   box-shadow: 0px 4px 10px rgba(255, 255, 255, 0.1);
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
-  height: 80px; /* Adjust as needed */
+  height: 80px;
   z-index: 1000;
 }
 header h1 {
@@ -55,27 +55,36 @@ footer {
   position: fixed;
   bottom: 0;
   left: 0;
-  height: 60px; /* Adjust as needed */
+  height: 60px;
   z-index: 1000;
 }
 
-/* Content Wrapper: centres gallery vertically between header and footer */
+/* 
+  Content Wrapper: a grid that perfectly centres its child 
+  (#galleryContainer) between header & footer.
+*/
 #contentWrapper {
   position: relative;
   flex: 1;
+  display: grid;
+  place-items: center;
+  height: calc(100vh - 140px); /* 80px header + 60px footer */
+}
+
+/* The gallery container is a column for nav, image, indicators */
+#galleryContainer {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  /* Exactly fill the space between header and footer */
-  height: calc(100vh - 140px);
+  gap: 1rem;
+  transform: translateY(-25px);
 }
 
 /* Loader & Spinner */
 .hidden {
   display: none;
 }
-.loader {
+#loader {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -94,27 +103,20 @@ footer {
   to { transform: rotate(360deg); }
 }
 
-/* Mobile Loader Adjustment */
-@media (max-width: 768px) {
-  #contentWrapper {
-    height: calc(100vh - 140px);
-  }
-  .loader {
-    top: 45%; /* Tweak for better alignment on mobile */
-  }
-  /* Remove extra top margin from gallery container if any */
-  #galleryContainer {
-    margin-top: 0 !important;
-  }
+/* Navigation Buttons Container (no extra margin) */
+.gallery-nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-/* Updated Image Container */
+/* Image Container */
 .image-container {
   position: relative;
   width: 90%;
-  max-width: 90vw;  /* Relative to viewport width */
-  height: 60vh;     /* Occupies 60% of the viewport height */
-  min-height: 300px; /* Ensures a minimum size */
+  max-width: none;  /* No horizontal limit */
+  max-height: 50vh; /* Retains vertical limit */
+  min-height: 200px;
   overflow: hidden;
   border-radius: 12px;
   display: flex;
@@ -123,26 +125,24 @@ footer {
   background: #222;
 }
 
-/* Image Transitions */
-.image-container img,
-.modal-body img {
-  opacity: 1;
-  transition: opacity 0.5s ease-in-out, transform 0.3s ease-in-out;
-}
-.image-container img.fade-out,
-.modal-body img.fade-out {
-  opacity: 0;
-  transform: scale(0.98);
-}
-.image-container img.fade-in,
-.modal-body img.fade-in {
-  opacity: 1;
-  transform: scale(1);
+/* On mobile, if you want to keep it narrower, you can reintroduce a smaller max-width: */
+@media (max-width: 768px) {
+  .image-container {
+    max-width: 600px; /* or whatever you like */
+    max-height: 40vh;
+  }
 }
 
-/* Image Indicators */
+/* Fit the image inside the container */
+.image-container img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  transition: opacity 0.5s ease-in-out, transform 0.3s ease-in-out;
+}
+
+/* Image Indicators (no extra margin) */
 .image-indicators {
-  margin-top: 12px;
   display: flex;
   justify-content: center;
 }
@@ -160,53 +160,36 @@ footer {
   transform: scale(1.2);
 }
 
-/* Button Base Styles */
-.btn-outline-light {
+/* Small Box Button Styling */
+.small-box-btn {
   width: 50px;
   height: 50px;
-  padding: 0;
   display: flex;
   align-items: center;
   justify-content: center;
+  border: 2px solid #fff;
+  background-color: transparent;
+  color: #fff;
   font-size: 24px;
-  border-radius: 50%;
-  transition: all 0.3s ease;
-  border: none;
-  background-color: rgba(255, 255, 255, 0.15);
-  color: white;
-  flex-shrink: 0;
-  outline: none;
-  -webkit-tap-highlight-color: transparent;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  border-radius: 4px;
 }
-.btn-outline-light::-moz-focus-inner {
-  border: 0;
-  padding: 0;
-}
-.btn-outline-light:focus-visible {
-  outline: none;
-}
-.btn-outline-light:focus,
-.btn-outline-light:active {
-  transform: none;
-  background-color: rgba(255, 255, 255, 0.15);
-  outline: none;
-  box-shadow: none;
-}
-.btn-outline-light:hover {
+.small-box-btn:hover {
   background-color: rgba(255, 255, 255, 0.3);
   transform: scale(1.1);
 }
 
-/* Gallery Container */
-.gallery {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 15px;
-  padding: 20px;
+/* Scale down the small box buttons on mobile */
+@media (max-width: 768px) {
+  .small-box-btn {
+    width: 40px;
+    height: 40px;
+    font-size: 20px;
+  }
 }
 
-/* Modal Dialog & Body */
+/* Modal Styles */
 .modal-dialog {
   max-width: 100vw;
   max-height: 100vh;
@@ -231,7 +214,7 @@ footer {
   object-fit: contain;
 }
 
-/* Force modal to fill viewport on mobile and hide overflow */
+/* Hide overflow in modal on mobile */
 @media (max-width: 768px) {
   .modal-dialog {
     margin: 0 !important;
@@ -253,11 +236,6 @@ footer {
     padding: 0 !important;
     overflow: hidden !important;
   }
-}
-
-/* --- Targeted Fix for Bootstrap Modal on Mobile --- */
-/* Prevent vertical scrolling in the modal view */
-@media (max-width: 768px) {
   .modal {
     overflow-y: hidden !important;
   }
@@ -309,25 +287,4 @@ footer {
 }
 .close-modal:hover {
   color: #ccc;
-}
-
-/* Responsive Adjustments */
-@media (max-width: 768px) {
-  .image-container {
-    height: 40vh;    /* Reduced relative height on mobile */
-    min-height: 250px;
-  }
-  .btn-outline-light {
-    font-size: 20px;
-    width: 45px;
-    height: 45px;
-  }
-  .image-indicators .indicator {
-    width: 10px;
-    height: 10px;
-  }
-  .modal-nav-btn {
-    font-size: 24px;
-    padding: 8px 12px;
-  }
 }
