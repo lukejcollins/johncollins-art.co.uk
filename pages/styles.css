@@ -59,7 +59,7 @@ footer {
   z-index: 1000;
 }
 
-/* Content Wrapper: centers gallery vertically between header and footer */
+/* Content Wrapper: centres gallery vertically between header and footer */
 #contentWrapper {
   position: relative;
   flex: 1;
@@ -108,12 +108,13 @@ footer {
   }
 }
 
-/* Image Container */
+/* Updated Image Container */
 .image-container {
   position: relative;
   width: 90%;
-  max-width: 600px;
-  height: 400px;
+  max-width: 90vw;  /* Relative to viewport width */
+  height: 60vh;     /* Occupies 60% of the viewport height */
+  min-height: 300px; /* Ensures a minimum size */
   overflow: hidden;
   border-radius: 12px;
   display: flex;
@@ -313,7 +314,8 @@ footer {
 /* Responsive Adjustments */
 @media (max-width: 768px) {
   .image-container {
-    height: 300px;
+    height: 40vh;    /* Reduced relative height on mobile */
+    min-height: 250px;
   }
   .btn-outline-light {
     font-size: 20px;

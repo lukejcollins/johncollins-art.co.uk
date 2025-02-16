@@ -13,6 +13,30 @@
     
     <!-- Custom Styles -->
     <link rel="stylesheet" href="styles.css" />
+
+    <!-- Inline styles for small box buttons -->
+    <style>
+     /* Small Box Button Styling */
+     .small-box-btn {
+         width: 50px;
+         height: 50px;
+         display: flex;
+         align-items: center;
+         justify-content: center;
+         border: 2px solid #fff;
+         background-color: transparent;
+         color: #fff;
+         font-size: 24px;
+         cursor: pointer;
+         transition: background-color 0.3s ease, transform 0.3s ease;
+         border-radius: 4px;
+     }
+     
+     .small-box-btn:hover {
+         background-color: rgba(255, 255, 255, 0.3);
+         transform: scale(1.1);
+     }
+    </style>
   </head>
   <body>
     <!-- Header -->
@@ -29,18 +53,23 @@
 
       <!-- Gallery Container (initially hidden) -->
       <main id="galleryContainer" class="container hidden">
-        <div class="gallery d-flex align-items-center justify-content-center">
-          <button id="prevBtn" class="btn btn-outline-light me-3 rounded-circle" aria-label="Previous Image" tabindex="-1">
-            <i class="bi bi-arrow-left-circle fs-3"></i>
+        <!-- Navigation Buttons Above the Image -->
+        <div class="gallery-nav d-flex align-items-center justify-content-center mb-3">
+          <button id="prevBtn" class="small-box-btn me-2" aria-label="Previous Image" tabindex="-1">
+            &lt;
           </button>
-          <div class="image-container shadow-lg">
-            <!-- Transparent placeholder (1x1 PNG) -->
-            <img id="galleryImage" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAE/wH+W4pfSAAAAABJRU5ErkJggg==" class="img-fluid rounded" alt="Gallery Image" />
-          </div>
-          <button id="nextBtn" class="btn btn-outline-light ms-3 rounded-circle" aria-label="Next Image" tabindex="-1">
-            <i class="bi bi-arrow-right-circle fs-3"></i>
+          <button id="nextBtn" class="small-box-btn ms-2" aria-label="Next Image" tabindex="-1">
+            &gt;
           </button>
         </div>
+
+        <!-- Image Container (centred) -->
+        <div class="image-container shadow-lg mx-auto">
+          <!-- Transparent placeholder (1x1 PNG) -->
+          <img id="galleryImage" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAE/wH+W4pfSAAAAABJRU5ErkJggg==" class="img-fluid rounded" alt="Gallery Image" />
+        </div>
+
+        <!-- Image Indicators -->
         <div class="image-indicators d-flex mt-3" id="imageIndicators"></div>
       </main>
     </div>
