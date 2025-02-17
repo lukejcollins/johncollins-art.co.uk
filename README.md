@@ -4,9 +4,9 @@ This is a simple web application built using HTML, CSS, JavaScript, Bootstrap, a
 
 ## Features
 
-- **Responsive Design**: Optimized for both desktop and mobile devices.
+- **Responsive Design**: Optimised for both desktop and mobile devices.
 - **Dynamic Image Loading**: Images URLs are fetched from the [Cloudinary](https://www.cloudinary.com/), where the images are hosted.
-- **Bootstrap Integration**: Utilizes Bootstrap for styling and responsive components.
+- **Bootstrap Integration**: Utilises Bootstrap for styling and responsive components.
 - **Interactive Navigation**: Includes buttons to navigate through images in the gallery and modal view, as well as keyboard and touch screen navigation.
 - **GitHub Actions CI/CD**: Automatically builds and deploys the application when changes are pushed to the main branch.
 
