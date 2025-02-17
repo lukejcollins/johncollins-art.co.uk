@@ -22,14 +22,18 @@ This is a simple web application built using HTML, CSS, JavaScript, Bootstrap, a
    cd john-collins-art
    ```
    
-2. **Set up secrets**:
+2. **Set up secrets files from the** ```./worker/winter-star-ad97/``` **folder**:
+   .var.dev
+   ```bash
+   CLOUDINARY_API_KEY=***
+   CLOUDINARY_API_SECRET=***
+   ```
    
 
 3. **Run the Page locally from the root directory**:
    ```bash
    npx wrangler pages dev ./pages
    ```
-   Run this from the root directory.
 
 4. **Run the Worker locally from the** ```./worker/winter-star-ad97/``` **folder**:
    ```bash
