@@ -23,7 +23,6 @@ This is a simple web application built using HTML, CSS, JavaScript, Bootstrap, a
    ```
 
 2. **Set up secrets file in** ```./worker/winter-star-ad97/.dev.vars```:
-   .var.dev
    ```bash
    CLOUDINARY_API_KEY=***
    CLOUDINARY_API_SECRET=***
