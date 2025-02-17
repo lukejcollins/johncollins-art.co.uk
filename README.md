@@ -1,3 +1,6 @@
+![Deploy Pages](https://github.com/lukejcollins/johncollins-art.co.uk/actions/workflows/deploy-pages.yml/badge.svg) ![Deploy Worker](https://github.com/lukejcollins/johncollins-art.co.uk/actions/workflows/deploy-worker.yml/badge.svg)
+
+
 # John Collins Art Gallery
 
 This is a simple web application built using HTML, CSS, JavaScript, Bootstrap, and GitHub Actions and hosted on Cloudflare Pages. The gallery showcases a collection of my late uncle's art.
