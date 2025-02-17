@@ -14,7 +14,7 @@ This is a simple web application built using HTML, CSS, JavaScript, Bootstrap, a
 
 - Node.js
 
-## Setup local developmen environment
+## Setup local development environment
 
 1. **Clone the Repository**:
    ```bash
