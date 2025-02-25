@@ -7,9 +7,9 @@ html.no-doc-scroll {
 html, body {
   overflow-x: hidden;
 }
+
 @media (max-width: 768px) {
   html, body {
-    /* No scrolling on mobile */
     overflow-y: hidden;
   }
 }
@@ -25,7 +25,7 @@ body {
   min-height: 100vh;
 }
 
-/* Fixed Header */
+/* Header */
 header {
   background-color: #111;
   padding: 20px;
@@ -40,11 +40,12 @@ header {
   height: 80px;
   z-index: 1000;
 }
+
 header h1 {
   text-transform: none;
 }
 
-/* Fixed Footer */
+/* Footer */
 footer {
   background-color: #111;
   color: white;
@@ -59,31 +60,28 @@ footer {
   z-index: 1000;
 }
 
-/* 
-  Content Wrapper: a grid that perfectly centres its child 
-  (#galleryContainer) between header & footer.
-*/
+/* Content Wrapper */
 #contentWrapper {
   position: relative;
   flex: 1;
   display: grid;
   place-items: center;
-  height: calc(100vh - 140px); /* 80px header + 60px footer */
+  height: calc(100vh - 140px);
 }
 
-/* The gallery container is a column for nav, image, indicators */
+/* Gallery */
 #galleryContainer {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 1rem;
-  transform: translateY(-25px);
 }
 
-/* Loader & Spinner */
+/* Loader */
 .hidden {
   display: none;
 }
+
 #loader {
   position: absolute;
   top: 50%;
@@ -91,6 +89,7 @@ footer {
   transform: translate(-50%, -50%);
   z-index: 9999;
 }
+
 .spinner {
   width: 30px;
   height: 30px;
@@ -99,11 +98,14 @@ footer {
   border-radius: 50%;
   animation: spin 1s linear infinite;
 }
+
 @keyframes spin {
-  to { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
-/* Navigation Buttons Container (no extra margin) */
+/* Navigation */
 .gallery-nav {
   display: flex;
   align-items: center;
@@ -114,8 +116,8 @@ footer {
 .image-container {
   position: relative;
   width: 90%;
-  max-width: none;  /* No horizontal limit */
-  max-height: 50vh; /* Retains vertical limit */
+  max-width: none;
+  max-height: 50vh;
   min-height: 200px;
   overflow: hidden;
   border-radius: 12px;
@@ -125,15 +127,14 @@ footer {
   background: #222;
 }
 
-/* On mobile, if you want to keep it narrower, you can reintroduce a smaller max-width: */
 @media (max-width: 768px) {
   .image-container {
-    max-width: 600px; /* or whatever you like */
+    max-width: 600px;
     max-height: 40vh;
   }
 }
 
-/* Fit the image inside the container */
+/* Image */
 .image-container img {
   max-width: 100%;
   max-height: 100%;
@@ -141,11 +142,12 @@ footer {
   transition: opacity 0.5s ease-in-out, transform 0.3s ease-in-out;
 }
 
-/* Image Indicators (no extra margin) */
+/* Image Indicators */
 .image-indicators {
   display: flex;
   justify-content: center;
 }
+
 .image-indicators .indicator {
   width: 12px;
   height: 12px;
@@ -155,12 +157,13 @@ footer {
   transition: background-color 0.3s ease-in-out, transform 0.2s;
   cursor: pointer;
 }
+
 .image-indicators .indicator.active {
   background-color: white;
   transform: scale(1.2);
 }
 
-/* Small Box Button Styling */
+/* Small Box Button */
 .small-box-btn {
   width: 50px;
   height: 50px;
@@ -175,12 +178,12 @@ footer {
   transition: background-color 0.3s ease, transform 0.3s ease;
   border-radius: 4px;
 }
+
 .small-box-btn:hover {
   background-color: rgba(255, 255, 255, 0.3);
   transform: scale(1.1);
 }
 
-/* Scale down the small box buttons on mobile */
 @media (max-width: 768px) {
   .small-box-btn {
     width: 40px;
@@ -189,7 +192,7 @@ footer {
   }
 }
 
-/* Modal Styles */
+/* Modal */
 .modal-dialog {
   max-width: 100vw;
   max-height: 100vh;
@@ -199,6 +202,7 @@ footer {
   justify-content: center;
   overflow: hidden;
 }
+
 .modal-body {
   display: flex;
   align-items: center;
@@ -208,13 +212,13 @@ footer {
   padding: 0;
   overflow: hidden;
 }
+
 .modal-body img {
   max-width: 100vw;
   max-height: 100vh;
   object-fit: contain;
 }
 
-/* Hide overflow in modal on mobile */
 @media (max-width: 768px) {
   .modal-dialog {
     margin: 0 !important;
@@ -222,6 +226,7 @@ footer {
     max-width: 100vw !important;
     height: 100vh !important;
   }
+
   .modal-content {
     width: 100% !important;
     height: 100vh !important;
@@ -230,18 +235,20 @@ footer {
     border: none !important;
     border-radius: 0 !important;
   }
+
   .modal-body {
     width: 100vw !important;
     height: 100vh !important;
     padding: 0 !important;
     overflow: hidden !important;
   }
+
   .modal {
     overflow-y: hidden !important;
   }
 }
 
-/* Modal Navigation Buttons */
+/* Modal Navigation */
 .modal-nav-btn {
   position: absolute;
   top: 50%;
@@ -262,15 +269,19 @@ footer {
   justify-content: center;
   outline: none;
 }
+
 .modal-nav-btn:active {
   transform: translateY(-50%) scale(1);
 }
+
 .modal-nav-btn.left {
   left: 10px;
 }
+
 .modal-nav-btn.right {
   right: 10px;
 }
+
 .modal-nav-btn:hover {
   background: rgba(0, 0, 0, 0.8);
 }
@@ -285,6 +296,7 @@ footer {
   outline: none;
   line-height: 1;
 }
+
 .close-modal:hover {
   color: #ccc;
 }

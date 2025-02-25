@@ -20,25 +20,33 @@ document.addEventListener("DOMContentLoaded", async function () {
   let currentIndex = 0;
   let isModalShown = false;
 
-  // Update modal state and fix the body to preserve scroll position and width
-  modalElement.addEventListener("shown.bs.modal", function () {
+  // BLOCK SCROLLING: Keep the page non-scrollable at all times
+  function disableScroll() {
+    document.body.style.overflow = "hidden";
+    document.documentElement.style.overflow = "hidden";
+  }
+
+  function enableScroll() {
+    document.body.style.overflow = "";
+    document.documentElement.style.overflow = "";
+  }
+
+  // **Disable scrolling on page load**
+  disableScroll();
+
+  // Ensure scrolling is blocked when modal is opened and re-blocked when closed
+  modalElement.addEventListener("show.bs.modal", function () {
     isModalShown = true;
-    const scrollY = window.scrollY;
-    document.body.style.position = 'fixed';
-    document.body.style.top = `-${scrollY}px`;
-    document.body.style.width = `${window.innerWidth}px`;
+    disableScroll();
   });
+
   modalElement.addEventListener("hidden.bs.modal", function () {
     isModalShown = false;
-    const scrollY = document.body.style.top;
-    document.body.style.position = '';
-    document.body.style.top = '';
-    document.body.style.width = '';
-    window.scrollTo(0, parseInt(scrollY || '0') * -1);
+    disableScroll(); // **Reapply scroll block to prevent Bootstrap from resetting it**
     updateIndicators();
   });
 
-  // Dynamic API URL based on environment
+  // Dynamic API URL (localhost vs. production)
   const apiUrl = window.location.hostname === "localhost"
     ? "http://127.0.0.1:8787/api/images"
     : "/api/images";
@@ -97,7 +105,6 @@ document.addEventListener("DOMContentLoaded", async function () {
     });
   }
 
-  // Open Modal & Set Image
   function openModal() {
     if (images.length > 0) {
       modalImage.src = images[currentIndex];
@@ -105,7 +112,6 @@ document.addEventListener("DOMContentLoaded", async function () {
     }
   }
 
-  // Update both gallery and modal image
   function updateBothViews() {
     if (images.length > 0) {
       modalImage.classList.add("fade-out");
@@ -126,7 +132,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     }
   }
 
-  // Gallery Navigation
+  // Navigation Controls
   prevBtn.addEventListener("click", function () {
     if (images.length > 0) {
       currentIndex = (currentIndex - 1 + images.length) % images.length;
@@ -134,6 +140,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     }
     setTimeout(() => this.blur(), 0);
   });
+
   nextBtn.addEventListener("click", function () {
     if (images.length > 0) {
       currentIndex = (currentIndex + 1) % images.length;
@@ -142,7 +149,6 @@ document.addEventListener("DOMContentLoaded", async function () {
     setTimeout(() => this.blur(), 0);
   });
 
-  // Modal Navigation
   modalPrevBtn.addEventListener("click", function () {
     if (images.length > 0) {
       currentIndex = (currentIndex - 1 + images.length) % images.length;
@@ -150,6 +156,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     }
     setTimeout(() => this.blur(), 0);
   });
+
   modalNextBtn.addEventListener("click", function () {
     if (images.length > 0) {
       currentIndex = (currentIndex + 1) % images.length;
@@ -158,14 +165,12 @@ document.addEventListener("DOMContentLoaded", async function () {
     setTimeout(() => this.blur(), 0);
   });
 
-  // Prevent buttons from receiving focus on mousedown
   [prevBtn, nextBtn, modalPrevBtn, modalNextBtn].forEach(btn => {
     btn.addEventListener("mousedown", function (e) {
       e.preventDefault();
     });
   });
 
-  // Keyboard Navigation
   document.addEventListener("keydown", function (event) {
     if (event.key === "ArrowLeft") {
       currentIndex = (currentIndex - 1 + images.length) % images.length;
@@ -178,10 +183,8 @@ document.addEventListener("DOMContentLoaded", async function () {
     }
   });
 
-  // Open Modal on Gallery Image Click
   galleryImage.addEventListener("click", openModal);
 
-  // Touch Swipe Support
   function addSwipeListener(element, callbackLeft, callbackRight) {
     let startX = 0;
     let lastSwipeTime = 0;
@@ -202,7 +205,6 @@ document.addEventListener("DOMContentLoaded", async function () {
     });
   }
 
-  // Enable swiping in gallery
   addSwipeListener(galleryImage, () => {
     currentIndex = (currentIndex + 1) % images.length;
     updateImage();
@@ -211,7 +213,6 @@ document.addEventListener("DOMContentLoaded", async function () {
     updateImage();
   });
 
-  // Enable swiping in modal
   addSwipeListener(modalImage, () => {
     currentIndex = (currentIndex + 1) % images.length;
     updateBothViews();
@@ -220,7 +221,6 @@ document.addEventListener("DOMContentLoaded", async function () {
     updateBothViews();
   });
 
-  // Exit Modal by Clicking Blank Space
   modalElement.addEventListener("click", function (e) {
     if (e.target === modalElement || e.target.classList.contains("modal-body")) {
       modal.hide();
