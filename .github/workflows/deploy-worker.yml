@@ -1,5 +1,11 @@
 name: Deploy Cloudflare Worker
+
 on:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - 'worker/**'
   push:
     branches:
       - main
@@ -21,7 +27,16 @@ jobs:
         working-directory: worker/winter-star-ad97
         run: npm install
 
-      - name: Deploy to Cloudflare Workers
+      - name: Deploy to Cloudflare Worker (Preprod)
+        if: github.event_name == 'pull_request'
+        working-directory: worker/winter-star-ad97
+        run: wrangler deploy --env preprod
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+
+      - name: Deploy to Cloudflare Worker (Production)
+        if: github.event_name == 'push'
         working-directory: worker/winter-star-ad97
         run: wrangler deploy
         env:

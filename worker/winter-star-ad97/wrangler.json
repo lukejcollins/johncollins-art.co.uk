@@ -7,6 +7,9 @@
   "env": {
     "production": {
       "routes": ["https://johncollins-art.co.uk/api/images"]
+    },
+    "preprod": {
+      "routes": ["https://preprod.johncollins-art.co.uk/api/images"]
     }
   }
 }
