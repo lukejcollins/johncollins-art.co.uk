@@ -1,7 +1,14 @@
 name: Deploy Cloudflare Pages
 
 on:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - 'pages/**'
   push:
+    branches:
+      - main
     paths:
       - 'pages/**'
   workflow_dispatch:
@@ -14,7 +21,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Deploy to Cloudflare Pages (Preprod)
-        if: github.ref != 'refs/heads/main'
+        if: github.event_name == 'pull_request'
         uses: cloudflare/pages-action@v1
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
