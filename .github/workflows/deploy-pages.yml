@@ -1,8 +1,7 @@
 name: Deploy Cloudflare Pages
+
 on:
   push:
-    branches:
-      - main
     paths:
       - 'pages/**'
   workflow_dispatch:
@@ -14,11 +13,22 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Deploy to Cloudflare Pages
+      - name: Deploy to Cloudflare Pages (Preprod)
+        if: github.ref != 'refs/heads/main'
         uses: cloudflare/pages-action@v1
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          projectName: ${{ vars.CLOUDFLARE_PAGES_NAME  }}
+          projectName: ${{ vars.CLOUDFLARE_PAGES_NAME }}
+          directory: "pages"
+          branch: preprod
+
+      - name: Deploy to Cloudflare Pages (Production)
+        if: github.ref == 'refs/heads/main'
+        uses: cloudflare/pages-action@v1
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          projectName: ${{ vars.CLOUDFLARE_PAGES_NAME }}
           directory: "pages"
           branch: main
