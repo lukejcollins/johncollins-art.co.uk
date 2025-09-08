@@ -66,7 +66,10 @@ footer {
   flex: 1;
   display: grid;
   place-items: center;
+  /* Fallback for older browsers */
   height: calc(100vh - 140px);
+  /* More stable on mobile address bar show/hide */
+  height: calc(100svh - 140px);
 }
 
 /* Gallery */
@@ -117,7 +120,10 @@ footer {
   position: relative;
   width: 90%;
   max-width: none;
-  max-height: 50vh;
+  /* Fallback */
+  height: 50vh;
+  /* Reduce jumpiness on mobile */
+  height: 50svh;
   min-height: 200px;
   overflow: hidden;
   border-radius: 12px;
@@ -130,37 +136,91 @@ footer {
 @media (max-width: 768px) {
   .image-container {
     max-width: 600px;
-    max-height: 40vh;
+    /* Fallback */
+    height: 40vh;
+    /* Stable height unit on mobile */
+    height: 40svh;
   }
 }
 
 /* Image */
 .image-container img {
-  max-width: 100%;
-  max-height: 100%;
+  /* Fix image size to container to avoid jump when intrinsic size arrives */
+  width: 100%;
+  height: 100%;
   object-fit: contain;
-  transition: opacity 0.5s ease-in-out, transform 0.3s ease-in-out;
+  opacity: 1;
+  transition: opacity 250ms ease-in-out;
 }
+
+.image-container img.fade-out { opacity: 0; }
+.image-container img.fade-in { opacity: 1; }
 
 /* Image Indicators */
 .image-indicators {
+  position: relative;
   display: flex;
+  align-items: center;
   justify-content: center;
+  gap: 2px;
+  overflow: hidden;
+  min-height: 24px;
+}
+
+.image-indicators .indicators-track {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: transform 220ms ease;
+  will-change: transform;
 }
 
 .image-indicators .indicator {
-  width: 12px;
-  height: 12px;
-  margin: 5px;
-  background-color: #666;
+  width: 10px;
+  height: 10px;
+  margin: 5px 4px;
+  background-color: #888;
   border-radius: 50%;
-  transition: background-color 0.3s ease-in-out, transform 0.2s;
+  opacity: 0.7;
+  transform: scale(1);
+  transition: background-color 0.2s ease-in-out, transform 0.2s, opacity 0.2s;
   cursor: pointer;
 }
 
+.image-indicators .indicator.near {
+  background-color: #aaa;
+  opacity: 0.9;
+}
+
+.image-indicators .indicator.far {
+  background-color: #777;
+  opacity: 0.6;
+  transform: scale(0.85);
+}
+
 .image-indicators .indicator.active {
-  background-color: white;
-  transform: scale(1.2);
+  background-color: #fff;
+  transform: scale(1.15);
+  opacity: 1;
+}
+
+.image-indicators .indicator.faint {
+  background-color: #666;
+  opacity: 0.4;
+  transform: scale(0.7);
+}
+
+.image-indicators .indicator-cursor {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 0 0 2px rgba(255,255,255,0.15), 0 0 12px rgba(255,255,255,0.15);
+  transform: translate(-50%, -50%);
+  transition: left 220ms ease, top 220ms ease;
+  pointer-events: none;
 }
 
 /* Small Box Button */
@@ -195,7 +255,10 @@ footer {
 /* Modal */
 .modal-dialog {
   max-width: 100vw;
+  /* Fallback to classic viewport units */
   max-height: 100vh;
+  /* Stable viewport height to reduce jumping */
+  max-height: 100svh;
   margin: 0;
   display: flex;
   align-items: center;
@@ -208,15 +271,23 @@ footer {
   align-items: center;
   justify-content: center;
   width: 100vw;
+  /* Fallback */
   height: 100vh;
+  /* Stable viewport height to reduce jumping */
+  height: 100svh;
   padding: 0;
   overflow: hidden;
 }
 
 .modal-body img {
   max-width: 100vw;
+  /* Fallback */
   max-height: 100vh;
+  /* Stable viewport height to reduce jumping */
+  max-height: 100svh;
   object-fit: contain;
+  touch-action: none; /* allow pinch/drag handling */
+  user-select: none;
 }
 
 @media (max-width: 768px) {
@@ -224,13 +295,20 @@ footer {
     margin: 0 !important;
     width: 100vw !important;
     max-width: 100vw !important;
+    /* Fallback */
     height: 100vh !important;
+    /* Stable viewport height */
+    height: 100svh !important;
   }
 
   .modal-content {
     width: 100% !important;
+    /* Fallback */
     height: 100vh !important;
     max-height: 100vh !important;
+    /* Stable viewport height */
+    height: 100svh !important;
+    max-height: 100svh !important;
     overflow: hidden !important;
     border: none !important;
     border-radius: 0 !important;
@@ -238,13 +316,37 @@ footer {
 
   .modal-body {
     width: 100vw !important;
+    /* Fallback */
     height: 100vh !important;
+    /* Stable viewport height */
+    height: 100svh !important;
     padding: 0 !important;
     overflow: hidden !important;
   }
 
   .modal {
     overflow-y: hidden !important;
+  }
+}
+
+/* Further reduce iOS bounce/backdrop jitter */
+.modal,
+.modal-backdrop {
+  overscroll-behavior: contain;
+}
+
+/* Desktop/laptop: constrain non-modal layout width */
+@media (min-width: 992px) {
+  .image-container {
+    width: 80%;
+    max-width: 1000px;
+  }
+  .gallery-nav,
+  .image-indicators {
+    width: 80%;
+    max-width: 1000px;
+    margin-left: auto;
+    margin-right: auto;
   }
 }
 
@@ -299,4 +401,11 @@ footer {
 
 .close-modal:hover {
   color: #ccc;
+}
+
+/* Disable modal nav buttons when zoomed */
+.modal-nav-btn:disabled {
+  opacity: 0.35;
+  cursor: default;
+  pointer-events: none;
 }
