@@ -7,6 +7,18 @@ html.no-doc-scroll {
 html, body {
   overflow-x: hidden;
   overscroll-behavior: none; /* prevent any scroll chaining/bounce */
+  height: 100%;
+}
+
+/* Hard lock scrolling on all devices (including iOS) */
+body {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  overflow: hidden;
 }
 
 /* No scrolling anywhere; JS also enforces overflow hidden */
