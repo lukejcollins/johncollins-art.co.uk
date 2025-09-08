@@ -43,6 +43,12 @@ header {
 
 header h1 {
   text-transform: none;
+  font-family: 'MedievalSharp', 'Poppins', Arial, sans-serif;
+}
+
+/* Footer font to match logo */
+footer, footer p {
+  font-family: 'MedievalSharp', 'Poppins', Arial, sans-serif;
 }
 
 /* Footer */
@@ -141,6 +147,12 @@ footer {
     /* Stable height unit on mobile */
     height: 40svh;
   }
+  /* Nudge the gallery stack upward so controls/viewport/indicators sit mid-way */
+  #galleryContainer {
+    transform: translateY(-6svh);
+  }
+  /* Slightly tighten vertical spacing on small screens */
+  #galleryContainer { gap: 0.75rem; }
 }
 
 /* Image */
