@@ -6,13 +6,10 @@ html.no-doc-scroll {
 /* Global Styles */
 html, body {
   overflow-x: hidden;
+  overscroll-behavior: none; /* prevent any scroll chaining/bounce */
 }
 
-@media (max-width: 768px) {
-  html, body {
-    overflow-y: hidden;
-  }
-}
+/* No scrolling anywhere; JS also enforces overflow hidden */
 
 body {
   font-family: "Poppins", Arial, sans-serif;

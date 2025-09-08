@@ -20,17 +20,18 @@ document.addEventListener("DOMContentLoaded", async function () {
   let currentIndex = 0;
   let isModalShown = false;
 
-  // Scroll control (lock only while modal is open)
+  // Scroll control (site-wide: no scrolling anywhere)
   function disableScroll() {
-    // Let Bootstrap handle most scroll locking; avoid changing root to prevent desktop vw jumps
     document.body.style.overflow = "hidden";
+    document.documentElement.style.overflow = "hidden";
   }
 
   function enableScroll() {
     document.body.style.overflow = "";
   }
 
-  // Allow scrolling by default; lock only during modal
+  // Disable scrolling on page load (site-wide)
+  disableScroll();
 
   // Block scrolling when modal is opened and re-block when closed
   modalElement.addEventListener("show.bs.modal", function () {
@@ -42,7 +43,8 @@ document.addEventListener("DOMContentLoaded", async function () {
 
   modalElement.addEventListener("hidden.bs.modal", function () {
     isModalShown = false;
-    enableScroll();
+    // Keep scrolling disabled site-wide
+    disableScroll();
     updateIndicators();
   });
 
